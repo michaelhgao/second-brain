@@ -6,6 +6,7 @@ import protectedRoutes from "./routes/protected";
 import notesRoutes from "./routes/notes";
 import linksRoutes from "./routes/links";
 import tasksRoutes from "./routes/tasks";
+import mainRoutes from "./routes/main";
 
 dotenv.config();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 
 app.use("/auth", authRoutes);
 app.use("/protected", protectedRoutes);
+
+app.use("/main", mainRoutes);
 
 app.use("/notes", notesRoutes);
 app.use("/links", linksRoutes);

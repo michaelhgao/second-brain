@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
+import MainPage from "./pages/MainPage";
 import NotesPage from "./pages/NotesPage";
+import LinksPage from "./pages/LinksPage";
+import TasksPage from "./pages/TasksPage";
 import { JSX } from "react";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
@@ -17,7 +20,31 @@ function App() {
                     path="/dashboard"
                     element={
                         <PrivateRoute>
+                            <MainPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/notes"
+                    element={
+                        <PrivateRoute>
                             <NotesPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/links"
+                    element={
+                        <PrivateRoute>
+                            <LinksPage />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/tasks"
+                    element={
+                        <PrivateRoute>
+                            <TasksPage />
                         </PrivateRoute>
                     }
                 />

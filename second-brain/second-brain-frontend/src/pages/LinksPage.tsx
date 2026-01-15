@@ -1,32 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { fetchNotes, createNote, updateNote, deleteNote } from "../api/notes";
+import { fetchLinks, createLink, updateLink, deleteLink } from "../api/links";
 
-interface Note {
+interface Link {
   id: string;
   title: string;
-  content: string;
+  url: string;
   createdAt: string;
-  updatedAt: string;
 }
 
-const NotesPage: React.FC = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+const LinksPage: React.FC = () => {
+  const [links, setLinks] = useState<Link[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [newTitle, setNewTitle] = useState("");
-  const [newContent, setNewContent] = useState("");
-  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [newUrl, setNewUrl] = useState("");
+  const [editingLinkId, setEditingLinkId] = useState<string | null>(null);
   const [editingTitle, setEditingTitle] = useState("");
-  const [editingContent, setEditingContent] = useState("");
+  const [editingUrl, setEditingUrl] = useState("");
 
   const token = localStorage.getItem("token")!;
 
-  const loadNotes = async () => {
+  const loadLinks = async () => {
     try {
       setLoading(true);
-      const data = await fetchNotes(token);
-      setNotes(data);
+      const data = await fetchLinks(token);
+      setLinks(data);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -35,17 +34,17 @@ const NotesPage: React.FC = () => {
   };
 
   useEffect(() => {
-    loadNotes();
+    loadLinks();
   }, []);
 
-  const handleAddNote = async (e: React.FormEvent) => {
+  const handleAddLink = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle || !newContent) return;
+    if (!newTitle || !newUrl) return;
     try {
-      const note = await createNote(token, newTitle, newContent);
-      setNotes([note, ...notes]);
+      const link = await createLink(token, newTitle, newUrl);
+      setLinks([link, ...links]);
       setNewTitle("");
-      setNewContent("");
+      setNewUrl("");
     } catch (err: any) {
       setError(err.message);
     }
@@ -53,31 +52,31 @@ const NotesPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await deleteNote(token, id);
-      setNotes(notes.filter((n) => n.id !== id));
+      await deleteLink(token, id);
+      setLinks(links.filter((l) => l.id !== id));
     } catch (err: any) {
       setError(err.message);
     }
   };
 
-  const startEditing = (note: Note) => {
-    setEditingNoteId(note.id);
-    setEditingTitle(note.title);
-    setEditingContent(note.content);
+  const startEditing = (link: Link) => {
+    setEditingLinkId(link.id);
+    setEditingTitle(link.title);
+    setEditingUrl(link.url);
   };
 
   const cancelEditing = () => {
-    setEditingNoteId(null);
+    setEditingLinkId(null);
     setEditingTitle("");
-    setEditingContent("");
+    setEditingUrl("");
   };
 
   const handleUpdate = async (id: string) => {
     try {
-      await updateNote(token, id, editingTitle, editingContent);
-      setNotes(
-        notes.map((n) =>
-          n.id === id ? { ...n, title: editingTitle, content: editingContent, updatedAt: new Date().toISOString() } : n
+      await updateLink(token, id, editingTitle, editingUrl);
+      setLinks(
+        links.map((l) =>
+          l.id === id ? { ...l, title: editingTitle, url: editingUrl } : l
         )
       );
       cancelEditing();
@@ -86,14 +85,14 @@ const NotesPage: React.FC = () => {
     }
   };
 
-  if (loading) return <p>Loading notes...</p>;
+  if (loading) return <p>Loading links...</p>;
   if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
 
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Your Notes</h1>
+      <h1>Your Links</h1>
 
-      <form onSubmit={handleAddNote} style={{ marginBottom: "2rem" }}>
+      <form onSubmit={handleAddLink} style={{ marginBottom: "2rem" }}>
         <input
           type="text"
           placeholder="Title"
@@ -102,26 +101,32 @@ const NotesPage: React.FC = () => {
           required
           style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
         />
-        <textarea
-          placeholder="Content"
-          value={newContent}
-          onChange={(e) => setNewContent(e.target.value)}
+        <input
+          type="url"
+          placeholder="URL"
+          value={newUrl}
+          onChange={(e) => setNewUrl(e.target.value)}
           required
           style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
         />
-        <button type="submit">Add Note</button>
+        <button type="submit">Add Link</button>
       </form>
 
-      {notes.length === 0 ? (
-        <p>No notes yet. Add one!</p>
+      {links.length === 0 ? (
+        <p>No links yet. Add one!</p>
       ) : (
         <ul style={{ listStyle: "none", padding: 0 }}>
-          {notes.map((note) => (
+          {links.map((link) => (
             <li
-              key={note.id}
-              style={{ border: "1px solid #ddd", borderRadius: "8px", padding: "1rem", marginBottom: "1rem" }}
+              key={link.id}
+              style={{
+                border: "1px solid #ddd",
+                borderRadius: "8px",
+                padding: "1rem",
+                marginBottom: "1rem",
+              }}
             >
-              {editingNoteId === note.id ? (
+              {editingLinkId === link.id ? (
                 <>
                   <input
                     type="text"
@@ -129,24 +134,27 @@ const NotesPage: React.FC = () => {
                     onChange={(e) => setEditingTitle(e.target.value)}
                     style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                   />
-                  <textarea
-                    value={editingContent}
-                    onChange={(e) => setEditingContent(e.target.value)}
+                  <input
+                    type="url"
+                    value={editingUrl}
+                    onChange={(e) => setEditingUrl(e.target.value)}
                     style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                   />
-                  <button onClick={() => handleUpdate(note.id)}>Save</button>
+                  <button onClick={() => handleUpdate(link.id)}>Save</button>
                   <button onClick={cancelEditing} style={{ marginLeft: "0.5rem" }}>
                     Cancel
                   </button>
                 </>
               ) : (
                 <>
-                  <h2>{note.title}</h2>
-                  <p>{note.content}</p>
-                  <small>Last updated: {new Date(note.updatedAt).toLocaleString()}</small>
+                  <h2>
+                    <a href={link.url} target="_blank" rel="noreferrer">
+                      {link.title}
+                    </a>
+                  </h2>
                   <div style={{ marginTop: "0.5rem" }}>
-                    <button onClick={() => startEditing(note)}>Edit</button>
-                    <button onClick={() => handleDelete(note.id)} style={{ marginLeft: "0.5rem" }}>
+                    <button onClick={() => startEditing(link)}>Edit</button>
+                    <button onClick={() => handleDelete(link.id)} style={{ marginLeft: "0.5rem" }}>
                       Delete
                     </button>
                   </div>
@@ -160,4 +168,4 @@ const NotesPage: React.FC = () => {
   );
 };
 
-export default NotesPage;
+export default LinksPage;
