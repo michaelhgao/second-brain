@@ -1,5 +1,5 @@
 import { AuthRequest } from "../middleware/auth.middleware";
-import { Request, Response } from "express";
+import { Response } from "express";
 import { prisma } from "../prisma/client";
 import { getId } from "../utils/getId";
 

@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import authRoutes from "./routes/auth";
 import protectedRoutes from "./routes/protected";
 import notesRoutes from "./routes/notes";
+import linksRoutes from "./routes/links";
+import tasksRoutes from "./routes/tasks";
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ app.use("/auth", authRoutes);
 app.use("/protected", protectedRoutes);
 
 app.use("/notes", notesRoutes);
+app.use("/links", linksRoutes);
+app.use("/tasks", tasksRoutes);
 
 const PORT = 3000;
 app.listen(PORT, () => {
