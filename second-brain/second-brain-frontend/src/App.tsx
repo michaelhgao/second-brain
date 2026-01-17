@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/Login";
-import MainPage from "./pages/MainPage";
-import NotesPage from "./pages/NotesPage";
-import LinksPage from "./pages/LinksPage";
-import TasksPage from "./pages/TasksPage";
+import Dashboard from "./pages/Dashboard";
+import Notes from "./pages/Notes";
+import Links from "./pages/Links";
+import Tasks from "./pages/Tasks";
 import { JSX } from "react";
 import Register from "./pages/Register";
 
@@ -22,7 +22,7 @@ function App() {
                     path="/dashboard"
                     element={
                         <PrivateRoute>
-                            <MainPage />
+                            <Dashboard />
                         </PrivateRoute>
                     }
                 />
@@ -30,7 +30,7 @@ function App() {
                     path="/notes"
                     element={
                         <PrivateRoute>
-                            <NotesPage />
+                            <Notes />
                         </PrivateRoute>
                     }
                 />
@@ -38,7 +38,7 @@ function App() {
                     path="/links"
                     element={
                         <PrivateRoute>
-                            <LinksPage />
+                            <Links />
                         </PrivateRoute>
                     }
                 />
@@ -46,7 +46,7 @@ function App() {
                     path="/tasks"
                     element={
                         <PrivateRoute>
-                            <TasksPage />
+                            <Tasks />
                         </PrivateRoute>
                     }
                 />

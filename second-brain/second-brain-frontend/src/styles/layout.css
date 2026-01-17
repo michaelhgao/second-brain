@@ -1,17 +1,28 @@
+/* Page wrapper */
 .page {
-  padding: 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
+    padding: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
+/* Card component */
 .card {
-  background: white;
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  border: 1px solid var(--border);
+    background-color: var(--color-card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid var(--color-border);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Page Titles */
 .page-title {
-  font-size: 1.75rem;
-  margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
 }
