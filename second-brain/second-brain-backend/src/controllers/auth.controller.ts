@@ -3,7 +3,7 @@ import { prisma } from "../prisma/client";
 import { hashPassword, comparePasswords } from "../utils/hash";
 import { signToken } from "../utils/jwt";
 
-export async function signup(req: Request, res: Response) {
+export async function register(req: Request, res: Response) {
     const { email, password } = req.body;
 
     if (!email || !password) {

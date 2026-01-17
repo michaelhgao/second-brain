@@ -2,7 +2,7 @@ import "../styles/pages/login.css"
 
 import { useState } from "react";
 import { login } from "../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -64,6 +64,10 @@ export default function Login() {
                 <div className="login-footer">
                     Your second brain awaits 🧠
                 </div>
+                <div className="login-footer">
+                    Don't have an account? <Link to="/register">Create one</Link>
+                </div>
+
             </form>
         </div>
     );

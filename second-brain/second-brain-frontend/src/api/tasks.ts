@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
-const API_URL = "http://localhost:3000/tasks";
+const API_URL = `${API_BASE_URL}/tasks`;
 
 export async function fetchTasks(token: string) {
     const res = await axios.get(API_URL, {

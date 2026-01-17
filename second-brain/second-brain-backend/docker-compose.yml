@@ -19,6 +19,8 @@ services:
   backend:
     build: .
     container_name: second-brain-backend
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
     restart: always
     env_file:
       - .env

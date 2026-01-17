@@ -1,6 +1,7 @@
 import axios from "axios";
+import { API_BASE_URL } from "../config";
 
-const API_URL = "http://localhost:3000/notes";
+const API_URL = `${API_BASE_URL}/notes`;
 
 export async function fetchNotes(token: string) {
     const res = await axios.get(API_URL, {

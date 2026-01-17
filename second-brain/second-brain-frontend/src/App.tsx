@@ -5,6 +5,7 @@ import NotesPage from "./pages/NotesPage";
 import LinksPage from "./pages/LinksPage";
 import TasksPage from "./pages/TasksPage";
 import { JSX } from "react";
+import Register from "./pages/Register";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
     const token = localStorage.getItem("token");
@@ -16,6 +17,7 @@ function App() {
         <Router>
             <Routes>
                 <Route path="/" element={<Login />} />
+                <Route path="/register" element={<Register />} />
                 <Route
                     path="/dashboard"
                     element={
