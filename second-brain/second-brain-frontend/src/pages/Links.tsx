@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchLinks, createLink, updateLink, deleteLink } from "../api/links";
+import "../styles/pages/links.css";
 
 interface Link {
     id: string;
@@ -86,75 +87,94 @@ const Links: React.FC = () => {
     };
 
     if (loading) return <p>Loading links...</p>;
-    if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+    if (error) return <p className="text-danger">Error: {error}</p>;
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h1>Your Links</h1>
+        <div className="page links-page">
+            <h1 className="page-title">Your Links</h1>
 
-            <form onSubmit={handleAddLink} style={{ marginBottom: "2rem" }}>
+            <form className="form" onSubmit={handleAddLink}>
+                <label className="form-label">Title</label>
                 <input
                     type="text"
                     placeholder="Title"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
+                    className="input"
                     required
-                    style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                 />
+                <label className="form-label">URL</label>
                 <input
                     type="url"
-                    placeholder="URL"
+                    placeholder="https://example.com"
                     value={newUrl}
                     onChange={(e) => setNewUrl(e.target.value)}
+                    className="input"
                     required
-                    style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                 />
-                <button type="submit">Add Link</button>
+                <button type="submit" className="button">
+                    Add Link
+                </button>
             </form>
 
             {links.length === 0 ? (
                 <p>No links yet. Add one!</p>
             ) : (
-                <ul style={{ listStyle: "none", padding: 0 }}>
+                <ul className="links-list">
                     {links.map((link) => (
-                        <li
-                            key={link.id}
-                            style={{
-                                border: "1px solid #ddd",
-                                borderRadius: "8px",
-                                padding: "1rem",
-                                marginBottom: "1rem",
-                            }}
-                        >
+                        <li key={link.id} className="card link-card">
                             {editingLinkId === link.id ? (
                                 <>
                                     <input
                                         type="text"
                                         value={editingTitle}
                                         onChange={(e) => setEditingTitle(e.target.value)}
-                                        style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
+                                        className="input"
                                     />
                                     <input
                                         type="url"
                                         value={editingUrl}
                                         onChange={(e) => setEditingUrl(e.target.value)}
-                                        style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
+                                        className="input"
                                     />
-                                    <button onClick={() => handleUpdate(link.id)}>Save</button>
-                                    <button onClick={cancelEditing} style={{ marginLeft: "0.5rem" }}>
-                                        Cancel
-                                    </button>
+                                    <div className="link-actions">
+                                        <button
+                                            className="button"
+                                            onClick={() => handleUpdate(link.id)}
+                                        >
+                                            Save
+                                        </button>
+                                        <button
+                                            className="button secondary"
+                                            onClick={cancelEditing}
+                                        >
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </>
                             ) : (
                                 <>
                                     <h2>
-                                        <a href={link.url} target="_blank" rel="noreferrer">
+                                        <a
+                                            href={link.url}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="link-title"
+                                        >
                                             {link.title}
                                         </a>
                                     </h2>
-                                    <div style={{ marginTop: "0.5rem" }}>
-                                        <button onClick={() => startEditing(link)}>Edit</button>
-                                        <button onClick={() => handleDelete(link.id)} style={{ marginLeft: "0.5rem" }}>
+                                    <div className="link-actions">
+                                        <button
+                                            className="button secondary"
+                                            onClick={() => startEditing(link)}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="button secondary"
+                                            onClick={() => handleDelete(link.id)}
+                                        >
                                             Delete
                                         </button>
                                     </div>

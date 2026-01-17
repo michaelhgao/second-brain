@@ -123,3 +123,48 @@
         flex-direction: column;
     }
 }
+
+.task-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--color-border);
+    background: var(--color-card);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.completed-text {
+    text-decoration: line-through;
+    color: var(--color-muted);
+    opacity: 0.7;
+}
+
+.complete-btn {
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.2s ease;
+}
+
+.complete-btn:hover {
+    transform: scale(1.05);
+}
+
+.complete-btn.completed {
+    background-color: var(--color-primary-light);
+    color: var(--color-success);
+}
+
+.complete-btn:not(.completed) {
+    background-color: var(--color-primary-light);
+    color: var(--color-text);
+}

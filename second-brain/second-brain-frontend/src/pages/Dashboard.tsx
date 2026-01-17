@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getDashboard } from "../api/main";
+import { getDashboard } from "../api/dashboard";
 import "../styles/pages/dashboard.css";
+import { updateTaskCompletion } from "../api/tasks";
 
 interface DashboardData {
     counts: { notes: number; links: number; tasks: number };
@@ -84,21 +85,65 @@ const Dashboard: React.FC = () => {
                     <h4>Links</h4>
                     <ul>
                         {data?.latest.links.map((l) => (
-                            <li key={l.id}>{l.title}</li>
+                            <li key={l.id}>
+                                <a href={l.url} target="_blank" rel="noreferrer" className="latest-link">
+                                    {l.title}
+                                </a>
+                            </li>
                         ))}
                     </ul>
                 </div>
+
 
                 <div className="latest-category">
                     <h4>Tasks</h4>
                     <ul>
                         {data?.latest.tasks.map((t) => (
-                            <li key={t.id} className={t.completed ? "completed" : ""}>
-                                {t.title} {t.completed ? "(Completed)" : ""}
+                            <li key={t.id} className="task-card">
+                                <div className="task-header">
+                                    <span className={`task-title ${t.completed ? "completed-text" : ""}`}>
+                                        {t.title}
+                                    </span>
+                                    <button
+                                        className={`complete-btn ${t.completed ? "completed" : ""}`}
+                                        onClick={async () => {
+                                            try {
+                                                const token = localStorage.getItem("token")!;
+                                                await updateTaskCompletion(token, t.id, !t.completed);
+
+                                                // Update local dashboard state
+                                                setData((prev) =>
+                                                    prev
+                                                        ? {
+                                                            ...prev,
+                                                            latest: {
+                                                                ...prev.latest,
+                                                                tasks: prev.latest.tasks.map((task) =>
+                                                                    task.id === t.id ? { ...task, completed: !task.completed } : task
+                                                                ),
+                                                            },
+                                                        }
+                                                        : prev
+                                                );
+                                            } catch (err) {
+                                                console.error("Failed to toggle task completion", err);
+                                            }
+                                        }}
+                                    >
+                                        {t.completed ? "Done!" : "In progress..."}
+                                    </button>
+                                </div>
+                                {t.dueDate && (
+                                    <p className={`task-deadline ${new Date(t.dueDate) < new Date() ? "overdue" : ""}`}>
+                                        Deadline: {new Date(t.dueDate).toLocaleDateString()}
+                                    </p>
+                                )}
                             </li>
                         ))}
                     </ul>
                 </div>
+
+
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../api/notes";
+import "../styles/pages/notes.css";
 
 interface Note {
     id: string;
@@ -77,7 +78,9 @@ const Notes: React.FC = () => {
             await updateNote(token, id, editingTitle, editingContent);
             setNotes(
                 notes.map((n) =>
-                    n.id === id ? { ...n, title: editingTitle, content: editingContent, updatedAt: new Date().toISOString() } : n
+                    n.id === id
+                        ? { ...n, title: editingTitle, content: editingContent, updatedAt: new Date().toISOString() }
+                        : n
                 )
             );
             cancelEditing();
@@ -87,66 +90,75 @@ const Notes: React.FC = () => {
     };
 
     if (loading) return <p>Loading notes...</p>;
-    if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+    if (error) return <p className="text-danger">Error: {error}</p>;
 
     return (
-        <div style={{ padding: "2rem" }}>
-            <h1>Your Notes</h1>
+        <div className="page notes-page">
+            <h1 className="page-title">Your Notes</h1>
 
-            <form onSubmit={handleAddNote} style={{ marginBottom: "2rem" }}>
+            <form className="form" onSubmit={handleAddNote}>
+                <label className="form-label">Title</label>
                 <input
                     type="text"
                     placeholder="Title"
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
+                    className="input"
                     required
-                    style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                 />
+                <label className="form-label">Content</label>
                 <textarea
                     placeholder="Content"
                     value={newContent}
                     onChange={(e) => setNewContent(e.target.value)}
+                    className="textarea"
                     required
-                    style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
                 />
-                <button type="submit">Add Note</button>
+                <button type="submit" className="button">
+                    Add Note
+                </button>
             </form>
 
             {notes.length === 0 ? (
                 <p>No notes yet. Add one!</p>
             ) : (
-                <ul style={{ listStyle: "none", padding: 0 }}>
+                <ul className="notes-list">
                     {notes.map((note) => (
-                        <li
-                            key={note.id}
-                            style={{ border: "1px solid #ddd", borderRadius: "8px", padding: "1rem", marginBottom: "1rem" }}
-                        >
+                        <li key={note.id} className="card note-card">
                             {editingNoteId === note.id ? (
                                 <>
                                     <input
                                         type="text"
                                         value={editingTitle}
                                         onChange={(e) => setEditingTitle(e.target.value)}
-                                        style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
+                                        className="input"
                                     />
                                     <textarea
                                         value={editingContent}
                                         onChange={(e) => setEditingContent(e.target.value)}
-                                        style={{ display: "block", marginBottom: "0.5rem", width: "100%" }}
+                                        className="textarea"
                                     />
-                                    <button onClick={() => handleUpdate(note.id)}>Save</button>
-                                    <button onClick={cancelEditing} style={{ marginLeft: "0.5rem" }}>
-                                        Cancel
-                                    </button>
+                                    <div className="note-actions">
+                                        <button className="button" onClick={() => handleUpdate(note.id)}>
+                                            Save
+                                        </button>
+                                        <button className="button secondary" onClick={cancelEditing}>
+                                            Cancel
+                                        </button>
+                                    </div>
                                 </>
                             ) : (
                                 <>
-                                    <h2>{note.title}</h2>
-                                    <p>{note.content}</p>
-                                    <small>Last updated: {new Date(note.updatedAt).toLocaleString()}</small>
-                                    <div style={{ marginTop: "0.5rem" }}>
-                                        <button onClick={() => startEditing(note)}>Edit</button>
-                                        <button onClick={() => handleDelete(note.id)} style={{ marginLeft: "0.5rem" }}>
+                                    <h2 className="note-title">{note.title}</h2>
+                                    <p className="note-content">{note.content}</p>
+                                    <small className="note-updated">
+                                        Last updated: {new Date(note.updatedAt).toLocaleString()}
+                                    </small>
+                                    <div className="note-actions">
+                                        <button className="button secondary" onClick={() => startEditing(note)}>
+                                            Edit
+                                        </button>
+                                        <button className="button secondary" onClick={() => handleDelete(note.id)}>
                                             Delete
                                         </button>
                                     </div>

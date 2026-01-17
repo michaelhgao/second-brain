@@ -35,6 +35,17 @@ export async function updateTask(
     return res.data;
 }
 
+// api/tasks.ts
+export async function updateTaskCompletion(token: string, id: string, completed: boolean) {
+    const res = await axios.put(
+        `${API_BASE_URL}/tasks/${id}`,
+        { completed }, // only send completed
+        { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
+}
+
+
 export async function deleteTask(token: string, id: string) {
     const res = await axios.delete(`${API_URL}/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
