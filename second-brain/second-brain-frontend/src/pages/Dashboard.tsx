@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getDashboard } from "../api/dashboard";
 import "../styles/pages/dashboard.css";
 import { updateTaskCompletion } from "../api/tasks";
+import { useTheme } from "../hooks/useTheme";
 
 interface DashboardData {
     counts: { notes: number; links: number; tasks: number };
@@ -14,6 +15,7 @@ interface DashboardData {
 }
 
 const Dashboard: React.FC = () => {
+    const { theme, toggleTheme } = useTheme();
     const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -41,7 +43,13 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className="dashboard-page">
-            <h1>Welcome to Your Second Brain</h1>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h1>Welcome to Your Second Brain</h1>
+
+                <button className="button secondary" onClick={toggleTheme}>
+                    {theme === 'light' ? '🌙' : '☀️'}
+                </button>
+            </div>
 
             <div className="dashboard-cards">
                 <div

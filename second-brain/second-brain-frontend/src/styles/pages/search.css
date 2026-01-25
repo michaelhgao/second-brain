@@ -1,7 +1,7 @@
 .search-form {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: var(--space-4);
+    margin-bottom: var(--space-8);
 }
 
 .search-input {
@@ -9,37 +9,34 @@
 }
 
 .search-results-count {
-    color: var(--color-muted);
-    margin-bottom: 1.5rem;
-    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-6);
 }
 
 .search-category {
-    margin-bottom: 2.5rem;
+    margin-bottom: var(--space-10);
 }
 
 .category-title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--color-text);
-    margin-bottom: 1rem;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-4);
 }
 
 .results-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
 }
 
 .result-item {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: var(--space-4);
     align-items: flex-start;
 }
 
 .result-icon {
-    font-size: 1.5rem;
+    font-size: var(--font-size-2xl);
     flex-shrink: 0;
 }
 
@@ -48,15 +45,14 @@
 }
 
 .result-title {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--color-text);
+    margin: 0 0 var(--space-2) 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
 }
 
 .result-preview {
-    margin: 0.5rem 0;
-    color: var(--color-muted);
+    margin: var(--space-2) 0;
+    color: var(--text-secondary);
     line-height: 1.5;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -64,27 +60,16 @@
     overflow: hidden;
 }
 
-.result-link {
-    color: var(--color-primary);
-    text-decoration: none;
-    word-break: break-all;
-    font-size: 0.9rem;
-}
-
-.result-link:hover {
-    text-decoration: underline;
-}
-
 .result-date {
     display: block;
-    margin-top: 0.75rem;
-    color: var(--color-muted);
-    font-size: 0.85rem;
+    margin-top: var(--space-3);
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
 }
 
 .no-results {
     text-align: center;
-    color: var(--color-muted);
-    padding: 2rem;
-    font-size: 1.1rem;
+    color: var(--text-muted);
+    padding: var(--space-8);
+    font-size: var(--font-size-lg);
 }
