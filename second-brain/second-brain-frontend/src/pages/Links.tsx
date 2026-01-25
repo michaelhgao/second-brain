@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { fetchLinks, createLink, updateLink, deleteLink } from "../api/links";
 import "../styles/pages/links.css";
+import { useNavigate } from "react-router-dom";
+import { Link } from "../types";
 
-interface Link {
-    id: string;
-    title: string;
-    url: string;
-    createdAt: string;
-}
 
 const Links: React.FC = () => {
+    const navigate = useNavigate();
     const [links, setLinks] = useState<Link[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -77,7 +74,7 @@ const Links: React.FC = () => {
             await updateLink(token, id, editingTitle, editingUrl);
             setLinks(
                 links.map((l) =>
-                    l.id === id ? { ...l, title: editingTitle, url: editingUrl } : l
+                    l.id === id ? { ...l, title: editingTitle, url: editingUrl, updatedAt: new Date().toISOString() } : l
                 )
             );
             cancelEditing();
@@ -91,6 +88,10 @@ const Links: React.FC = () => {
 
     return (
         <div className="page links-page">
+            <button className="button secondary" onClick={() => navigate(-1)}>
+                ← Back
+            </button>
+
             <h1 className="page-title">Your Links</h1>
 
             <form className="form" onSubmit={handleAddLink}>

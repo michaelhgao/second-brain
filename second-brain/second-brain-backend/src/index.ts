@@ -11,6 +11,7 @@ import mainRoutes from "./routes/main";
 dotenv.config();
 
 const app = express();
+const port = parseInt(process.env.PORT || "3000", 10);
 
 app.use(cors());
 app.use(express.json());
@@ -24,7 +25,6 @@ app.use("/notes", notesRoutes);
 app.use("/links", linksRoutes);
 app.use("/tasks", tasksRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
 });

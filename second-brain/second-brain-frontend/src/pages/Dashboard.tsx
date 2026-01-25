@@ -67,6 +67,14 @@ const Dashboard: React.FC = () => {
                     <h2>Tasks</h2>
                     <p>{data?.counts.tasks} total</p>
                 </div>
+
+                <div
+                    className="dashboard-card"
+                    onClick={() => navigate("/timeline")}
+                >
+                    <h2>Timeline</h2>
+                    <p>View all activity</p>
+                </div>
             </div>
 
             <div className="dashboard-latest">

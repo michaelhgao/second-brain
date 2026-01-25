@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { fetchTasks, createTask, updateTask, deleteTask } from "../api/tasks";
 import "../styles/pages/tasks.css";
+import { useNavigate } from "react-router-dom";
+import { Task } from "../types";
 
-interface Task {
-    id: string;
-    title: string;
-    description?: string;
-    completed: boolean;
-    dueDate?: string;
-    createdAt: string;
-    updatedAt: string;
-}
+
 
 const Tasks: React.FC = () => {
+    const navigate = useNavigate();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -127,6 +122,10 @@ const Tasks: React.FC = () => {
 
     return (
         <div className="page tasks-page">
+            <button className="button secondary" onClick={() => navigate(-1)}>
+                ← Back
+            </button>
+
             <h1 className="page-title">Your Tasks</h1>
 
             {/* Add Task Form */}

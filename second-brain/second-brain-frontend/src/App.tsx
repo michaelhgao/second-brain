@@ -6,6 +6,7 @@ import Links from "./pages/Links";
 import Tasks from "./pages/Tasks";
 import { JSX } from "react";
 import Register from "./pages/Register";
+import Timeline from "./pages/Timeline";
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
     const token = localStorage.getItem("token");
@@ -50,6 +51,9 @@ function App() {
                         </PrivateRoute>
                     }
                 />
+                <Route path="/timeline" element={<PrivateRoute>
+                    <Timeline />
+                </PrivateRoute>} />
             </Routes>
         </Router>
     );

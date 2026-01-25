@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../api/notes";
 import "../styles/pages/notes.css";
+import { useNavigate } from "react-router-dom";
+import { Note } from "../types";
 
-interface Note {
-    id: string;
-    title: string;
-    content: string;
-    createdAt: string;
-    updatedAt: string;
-}
 
 const Notes: React.FC = () => {
+    const navigate = useNavigate();
     const [notes, setNotes] = useState<Note[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -94,6 +90,10 @@ const Notes: React.FC = () => {
 
     return (
         <div className="page notes-page">
+            <button className="button secondary" onClick={() => navigate(-1)}>
+                ← Back
+            </button>
+
             <h1 className="page-title">Your Notes</h1>
 
             <form className="form" onSubmit={handleAddNote}>
