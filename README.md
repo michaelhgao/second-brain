@@ -24,7 +24,6 @@ A personal aggregation hub for your **notes**, **links**, and **tasks**; your ve
 
 ## Todos
 
-- Create a timeline that lets you view all notes, links, and tasks in chronological order
 - Provide analytics
 - Add folders for items
 - Markdown support

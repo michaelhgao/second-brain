@@ -7,6 +7,7 @@ import notesRoutes from "./routes/notes";
 import linksRoutes from "./routes/links";
 import tasksRoutes from "./routes/tasks";
 import mainRoutes from "./routes/main";
+import searchRoutes from "./routes/search";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use("/main", mainRoutes);
 app.use("/notes", notesRoutes);
 app.use("/links", linksRoutes);
 app.use("/tasks", tasksRoutes);
+app.use("/search", searchRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

@@ -20,9 +20,38 @@
 
 /* Summary Cards Container */
 .dashboard-cards {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
-    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.dashboard-card:nth-child(1),
+.dashboard-card:nth-child(2),
+.dashboard-card:nth-child(3) {
+    grid-row: 1;
+}
+
+.dashboard-card:nth-child(4) {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.dashboard-card:nth-child(5) {
+    grid-row: 2;
+    grid-column: 2;
+}
+
+@media (max-width: 768px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .dashboard-card {
+        grid-column: 1 !important;
+        grid-row: auto !important;
+    }
 }
 
 /* Individual Summary Card */
